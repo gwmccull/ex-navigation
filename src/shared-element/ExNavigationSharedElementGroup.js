@@ -3,7 +3,8 @@
  */
 
 import _ from 'lodash';
-import React, { cloneElement, Children, Component, PropTypes } from 'react';
+import React, { cloneElement, Children, Component } from 'react';
+import PropTypes from 'prop-types';
 import { Animated, Easing, View } from 'react-native';
 
 import UUID from 'uuid-js';

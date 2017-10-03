@@ -45,8 +45,9 @@ const {
 } = require('react-native');
 
 const { NativeAnimatedModule } = NativeModules;
-const { PropTypes } = React;
 const { Directions } = NavigationCardStackPanResponder;
+
+import PropTypes from 'prop-types';
 
 import type {
   NavigationState,
