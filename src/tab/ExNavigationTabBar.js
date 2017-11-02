@@ -6,6 +6,9 @@ import {
   TouchableNativeFeedback,
   Text,
   View,
+  Platform,
+  Dimensions,
+  PixelRatio
 } from 'react-native';
 
 import { unsupportedNativeView } from '../ExUnsupportedNativeView';
@@ -21,14 +24,17 @@ if (expoModule) {
 }
 
 import TabBadge from '../ExNavigationBadge';
+import deviceUtils from '../utils/deviceUtils';
 
+const IS_IPHONE_X = deviceUtils.isIphoneX();
 const DEFAULT_TAB_BAR_HEIGHT = 56;
 
 export default class ExNavigationTabBar extends React.Component {
   static defaultHeight = DEFAULT_TAB_BAR_HEIGHT;
 
   render() {
-    const height = this.props.height || DEFAULT_TAB_BAR_HEIGHT;
+    let height = IS_IPHONE_X ? 34 : 0;
+    height += this.props.height || DEFAULT_TAB_BAR_HEIGHT;
     let isTranslucent = this.props.translucent;
     let backgroundColor = isTranslucent ? 'rgba(255,255,255,0.5)' : '#fefefe';
 
@@ -128,6 +134,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: 'transparent',
+    paddingBottom: IS_IPHONE_X ? 34 : 0,
   },
   translucentUnderlay: {
     position: 'absolute',
@@ -154,6 +161,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     flex: 1,
     flexDirection: 'row',
+    paddingBottom: IS_IPHONE_X ? 34 : 0,
   },
   tabItem: {
     flex: 1,
