@@ -7,9 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ViewPropTypes,
-  Dimensions,
-  PixelRatio
+  ViewPropTypes
 } from 'react-native';
 import PropTypes from 'prop-types';
 import PureComponent from './utils/PureComponent';
@@ -33,9 +31,9 @@ const IS_IPHONE_X = deviceUtils.isIphoneX();
 // So we need to factor the status bar height in with Exponent but can ignore it with
 // vanilla React Native
 let STATUSBAR_HEIGHT = 0;
-if (Platform.OS === "ios" && IS_IPHONE_X) {
+if (Platform.OS === 'ios' && IS_IPHONE_X) {
   STATUSBAR_HEIGHT = 44;
-} else if (Platform.OS === "ios") {
+} else if (Platform.OS === 'ios') {
   STATUSBAR_HEIGHT = 20;
 } else if (global.__exponent) {
   STATUSBAR_HEIGHT = 24;
