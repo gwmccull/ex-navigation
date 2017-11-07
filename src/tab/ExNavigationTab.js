@@ -3,7 +3,7 @@
  */
 
 import React, { Children } from 'react';
-import { StyleSheet, View, Platform, Dimensions, PixelRatio } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import PureComponent from '../utils/PureComponent';
 import StaticContainer from 'react-static-container';
