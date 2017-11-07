@@ -19,6 +19,9 @@ import ExNavigationTabItem from './ExNavigationTabItem';
 import { createNavigatorComponent } from '../ExNavigationComponents';
 
 import type ExNavigationContext from '../ExNavigationContext';
+import deviceUtils from '../utils/deviceUtils';
+
+const IS_IPHONE_X = deviceUtils.isIphoneX();
 
 export class ExNavigationTabContext extends ExNavigatorContext {
   type = 'tab';
@@ -388,6 +391,7 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
+    paddingBottom: IS_IPHONE_X ? 34 : 0,
   },
   tabContent: {
     position: 'absolute',

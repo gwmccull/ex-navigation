@@ -7,12 +7,13 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ViewPropTypes,
+  ViewPropTypes
 } from 'react-native';
 import PropTypes from 'prop-types';
 import PureComponent from './utils/PureComponent';
 import { unsupportedNativeView } from './ExUnsupportedNativeView';
 import { withNavigation } from './ExNavigationComponents';
+import deviceUtils from './utils/deviceUtils';
 
 let BlurView;
 let expoModule = global.__exponent || global.__expo;
@@ -24,12 +25,19 @@ if (expoModule) {
   BlurView = unsupportedNativeView('BlurView');
 }
 
+const IS_IPHONE_X = deviceUtils.isIphoneX();
+
 // Exponent draws under the status bar on Android, but vanilla React Native does not.
 // So we need to factor the status bar height in with Exponent but can ignore it with
 // vanilla React Native
-const STATUSBAR_HEIGHT = Platform.OS === 'ios'
-  ? 20
-  : global.__exponent ? 24 : 0;
+let STATUSBAR_HEIGHT = 0;
+if (Platform.OS === 'ios' && IS_IPHONE_X) {
+  STATUSBAR_HEIGHT = 44;
+} else if (Platform.OS === 'ios') {
+  STATUSBAR_HEIGHT = 20;
+} else if (global.__exponent) {
+  STATUSBAR_HEIGHT = 24;
+}
 
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 55;
 const BACKGROUND_COLOR = Platform.OS === 'ios' ? '#EFEFF2' : '#FFF';
@@ -272,6 +280,7 @@ export default class ExNavigationBar extends PureComponent {
       <View
         pointerEvents={this.props.visible ? 'auto' : 'none'}
         style={wrapperStyle}>
+        {IS_IPHONE_X && <View style={styles.iPhoneXStatusBar} />}
         {isTranslucent &&
           <BlurView
             tint={translucentTint}
@@ -401,6 +410,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
+
     // TODO(brentvatne): come up with a better solution for making the
     // elevation show up properly on Android
     paddingBottom: Platform.OS === 'android' ? 16 : 0,
@@ -408,6 +418,15 @@ const styles = StyleSheet.create({
 
   wrapperWithoutAppbar: {
     paddingTop: 0,
+  },
+
+  iPhoneXStatusBar: {
+    height: STATUSBAR_HEIGHT,
+    backgroundColor: 'white',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0
   },
 
   translucentUnderlay: {
@@ -428,7 +447,7 @@ const styles = StyleSheet.create({
     left: 0,
     position: 'absolute',
     right: 0,
-    top: 0,
+    top: IS_IPHONE_X ? 24 : 0,
   },
   appbarSolid: {
     backgroundColor: ExNavigationBar.DEFAULT_BACKGROUND_COLOR,
