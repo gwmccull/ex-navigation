@@ -6,9 +6,6 @@ import {
   TouchableNativeFeedback,
   Text,
   View,
-  Platform,
-  Dimensions,
-  PixelRatio
 } from 'react-native';
 
 import { unsupportedNativeView } from '../ExUnsupportedNativeView';
